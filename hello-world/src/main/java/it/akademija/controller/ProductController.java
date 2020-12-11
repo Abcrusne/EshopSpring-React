@@ -1,7 +1,7 @@
 package it.akademija.controller;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,20 +32,20 @@ public class ProductController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ApiOperation(value = "Get products", notes = "Returns all products")
-	public List<Product> getProducts() {
+	public Set<Product> getProducts() {
 		return productDao.getProducts();
 	}
 
 	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
 	@ApiOperation(value = "Get product", notes = "Returns product with specified id")
-	public Product getProduct(@PathVariable Long id) {
+	public Product getProduct(@PathVariable final Long id) {
 		return productDao.getProduct(id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "Create product", notes = "Creates new product")
-	public void addProduct(@RequestBody CreateProductCommand cmd) {
+	public void addProduct(@RequestBody final CreateProductCommand cmd) {
 		Long id = (long) (getProducts().size() + 1);
 		String title = cmd.getTitle();
 		String description = cmd.getDescription();
@@ -73,7 +73,7 @@ public class ProductController {
 	@RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@ApiOperation(value = "Delete product", notes = "Deletes product with specified id")
-	public void deleteProduct(@PathVariable Long id) {
+	public void deleteProduct(@PathVariable final Long id) {
 		productDao.deleteProduct(id);
 	}
 

@@ -36,7 +36,7 @@ const ProductDetailsComponent = ({
             Add to cart
           </button>
         ) : (
-          <div> alert(You need to login to add products to your cart.)</div>
+          <h5>You need to login to add products to your cart.</h5>
         )}
         <Link to={'/'} className="btn btn-outline-dark">
           Go back

@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import ServicesContext from '../../context/ServicesContext';
 import CartSummaryContainer from '../Cart/CartSummaryContainer';
 import LoginContainer from '../Login/LoginContainer';
+import SearchPage from '../Search/SearchContainer';
 
 const NavBar = () => {
   const { userCartService } = useContext(ServicesContext);
@@ -25,7 +26,12 @@ const NavBar = () => {
               Admin
             </NavLink>
           </li>
-          <LoginContainer />
+          <li>
+            <LoginContainer />
+          </li>
+          <li>
+            <SearchPage />
+          </li>
         </ul>
         <ul className="nav navbar-nav navbar-right">
           <li className="nav-item active">

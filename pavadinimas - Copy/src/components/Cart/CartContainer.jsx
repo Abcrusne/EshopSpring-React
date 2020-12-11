@@ -22,30 +22,36 @@ const CartContainer = () => {
         setUserProducts(response.data);
       })
       .catch((err) => console.log(err));
-  }, [currentUser]);
+  }, [currentUser, userCartService]);
 
   const deleteFromCart = (e) => {
+    console.log(e.target.type);
+    console.log(e.target);
     axios
       .delete(
         `${myUrl}/api/users/${currentUser}/cart-products/${e.target.value}`
       )
-      .then(() => {
-        axios
-          .get(`${myUrl}/api/users/${currentUser}/cart-products`)
-          .then((response) => {
-            setUserProducts(response.data);
-            userCartService.setCartCount(response.data.length);
-            userCartService.updateCartCount();
-          })
-          .catch((err) => console.log(err));
-      });
+      // .then(() => {
+      //   axios
+      //     .get(`${myUrl}/api/users/${currentUser}/cart-products`)
+      .then((response) => {
+        setUserProducts(response.data);
+        userCartService.setCartCount(response.data.length);
+        userCartService.updateCartCount();
+      })
+      .catch((err) => console.log(err));
   };
+
+  const totalOfCart = userProducts.reduce((total, userProducts) => {
+    return total + userProducts.price;
+  }, 0);
 
   return (
     <CartComponent
       deleteFromCart={deleteFromCart}
       currentUser={currentUser}
       userProducts={userProducts}
+      totalOfCart={totalOfCart}
     />
   );
 };

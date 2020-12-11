@@ -5,23 +5,29 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-public final class CreateUserCommand {
+public class CreateUserCommand {
 	@NotNull
 	private Long id;
 
 	@NotNull
 	@Length(min = 1, max = 30)
 	private String username;
+
 	@NotNull
 	@Length(min = 1, max = 100)
 	private String firstName;
+
 	@NotNull
 	@Length(min = 1, max = 100)
 	private String lastName;
+
 	@NotNull
 	@Length(min = 1, max = 100)
 	@Email
 	private String email;
+
+	@NotNull
+	private Integer age;
 
 	public Long getId() {
 		return id;
@@ -61,6 +67,14 @@ public final class CreateUserCommand {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
 	}
 
 }

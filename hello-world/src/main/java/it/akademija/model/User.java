@@ -4,27 +4,34 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
+@NamedQuery(name = "User.findOldestUser", query = "select u from User u where u.age = (select max(u1.age) from User u1)")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String username;
-	private String firstName;
-	private String lastName;
+	private String firstname;
+	private String lastname;
 	private String email;
+	private Integer age;
 
+	@Autowired
 	public User() {
 	}
 
-	public User(Long id, String username, String firstName, String lastName, String email) {
+	public User(Long id, String username, String firstname, String lastname, String email, Integer age) {
 		this.id = id;
 		this.username = username;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.email = email;
+		this.age = age;
 	}
 
 	public Long getId() {
@@ -39,12 +46,12 @@ public class User {
 		return username;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getLastname() {
+		return lastname;
 	}
 
 	public String getEmail() {
@@ -55,16 +62,24 @@ public class User {
 		this.username = username;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
 	}
 
 }

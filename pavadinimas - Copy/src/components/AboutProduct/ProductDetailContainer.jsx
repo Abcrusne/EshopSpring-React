@@ -29,6 +29,7 @@ const ProductDetailContainer = (props) => {
         id: product.id,
         image: product.image || '',
         title: product.title,
+        //quantity
       })
       .then(() => {
         axios

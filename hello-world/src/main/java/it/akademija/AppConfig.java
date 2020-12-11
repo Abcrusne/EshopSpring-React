@@ -19,12 +19,12 @@ public class AppConfig {
 	}
 
 	@Bean
-	public Product getProduc2() {
+	public Product getProduct2() {
 		return new Product(2l, "kede", "aprasymas daikto", ".jpg", new BigDecimal(10), 30);
 	}
 
 	@Bean
-	public Product getProduc3() {
+	public Product getProduct3() {
 		return new Product(3l, "stiklas", "aprasau", ".jpg", new BigDecimal(100), 15);
 	}
 

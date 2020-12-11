@@ -20,12 +20,8 @@ const CartSummaryContainer = () => {
     setCartCount(userCartService.getCartCount());
   useEffect(() => {
     if (currentUser !== undefined) {
-      // .get(
-      // `https://itpro2017.herokuapp.com/api/users/${currentUser}/cart-products`
       axios
-        //.get(`${myUrl}/api/users/${currentUser}/cart-products`)
-        .get(
-          `${myUrl}/api/users/${currentUser}/cart-products`)
+        .get(`${myUrl}/api/users/${currentUser}/cart-products`)
         .then((response) => {
           userCartService.setCartCount(response.data.length());
           userCartService.updateCartCount();

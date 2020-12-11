@@ -1,10 +1,11 @@
 import React from 'react';
 import img from '../../img/samsung-small.jpg';
 import { Link } from 'react-router-dom';
+import Modal from '../modal/ModalComponent';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import {faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 
-const CartComponent = ({ userProducts, currentUser, deleteFromCart }) => {
+const CartComponent = ({ userProducts, currentUser, deleteFromCart, totalOfCart }) => {
   if (userProducts.length > 0) {
     return (
       <div className="container mt-6">
@@ -31,6 +32,8 @@ const CartComponent = ({ userProducts, currentUser, deleteFromCart }) => {
                 <td>
                   <button
                     className="btn btn-danger"
+                    // data-toggle="modal"
+                    // data-target="#staticBackdrop"
                     onClick={deleteFromCart}
                     value={id}
                   >
@@ -38,9 +41,45 @@ const CartComponent = ({ userProducts, currentUser, deleteFromCart }) => {
                   </button>
                 </td>
               </tr>
+              <Modal
+                // className="modal fade"
+                // id="staticBackdrop"
+                // data-backdrop="static"
+                // data-keyboard="false"
+                // tabIndex="-1"
+                // aria-labelledby="staticBackdropLabel"
+                // aria-hidden="true"
+                productId={id}
+                title={title}
+                deleteFromCart={deleteFromCart}
+              />
+              {/* <button
+                    className="btn btn-danger"
+                    data-toggle="modal"
+                    data-target="#staticBackdrop"
+                    // onClick={deleteFromCart}
+                    // value={id}
+                  >
+                    Delete from cart
+                  </button>
+                </td>
+              </tr>
+              <Modal
+                className="modal fade"
+                id="staticBackdrop"
+                data-backdrop="static"
+                data-keyboard="false"
+                tabIndex="-1"
+                aria-labelledby="staticBackdropLabel"
+                aria-hidden="true"
+                productId={id}
+                title={title}
+                deleteFromCart={deleteFromCart}
+              /> */}
             </tbody>
           ))}
         </table>
+            <h5>Total: {totalOfCart}</h5>
       </div>
     );
   } else {
@@ -54,7 +93,9 @@ const CartComponent = ({ userProducts, currentUser, deleteFromCart }) => {
             </Link>
           </div>
         ) : (
-          <h5> Please Login!</h5>
+          <div className="alert alert-info" role="alert">
+            Please login!
+          </div>
         )}
       </div>
     );

@@ -6,4 +6,8 @@ import it.akademija.model.User;
 
 public interface DBUserDao extends JpaRepository<User, Long> {
 
+	User findByFirstnameAndLastname(String firstname, String lastname);
+
+	User findOldestUser();
+
 }

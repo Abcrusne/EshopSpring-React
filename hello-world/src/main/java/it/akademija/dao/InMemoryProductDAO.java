@@ -1,8 +1,7 @@
 package it.akademija.dao;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,11 +12,11 @@ import it.akademija.model.Product;
 public class InMemoryProductDAO implements ProductDAO {
 
 	@Autowired
-	private List<Product> products = new CopyOnWriteArrayList<>();
+	private Set<Product> products;
 
 	@Override
-	public List<Product> getProducts() {
-		return Collections.unmodifiableList(products);
+	public Set<Product> getProducts() {
+		return Collections.unmodifiableSet(products);
 	}
 
 	@Override

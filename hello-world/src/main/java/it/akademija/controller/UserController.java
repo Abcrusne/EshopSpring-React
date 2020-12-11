@@ -67,6 +67,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
 	public UserController(UserService userService) {
 		super();
 		this.userService = userService;
@@ -91,16 +92,18 @@ public class UserController {
 	@ApiOperation(value = "Create user", notes = "Creates users with data")
 	public void createUser(
 			@ApiParam(value = "User Data", required = true) @Valid @RequestBody final CreateUserCommand cmd) {
-		User user = new User(cmd.getId(), cmd.getUsername(), cmd.getFirstName(), cmd.getLastName(), cmd.getEmail());
+		User user = new User(cmd.getId(), cmd.getUsername(), cmd.getFirstName(), cmd.getLastName(), cmd.getEmail(),
+				cmd.getAge());
 		userService.createUser(user);
 		System.out.println("Created user with username: " + user.getUsername());
 	}
 
 	/* Apdoros užklausas: DELETE /api/users/<vartotojas> */
-	@RequestMapping(path = "/{username}", method = RequestMethod.DELETE)
+	@RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ApiOperation(value = "Delete user", notes = "Deletes user by id")
 	public void deleteUser(@PathVariable final Long id) {
-		userService.deleteUser(id);
+		userService.deleteUserById(id);
 		System.out.println("Deleting user: " + id);
 	}
 }

@@ -36,9 +36,22 @@ public class UserService {
 	}
 
 	@Transactional
-	public void deleteUser(@PathVariable final Long id) {
+	public void deleteUserById(@PathVariable final Long id) {
 		dbUserDao.deleteById(id);
 
+	}
+
+	@Transactional
+	public void findOldestUser() {
+		dbUserDao.findOldestUser();
+	}
+
+	public DBUserDao getDbUserDao() {
+		return dbUserDao;
+	}
+
+	public void setDbUserDao(DBUserDao dbUserDao) {
+		this.dbUserDao = dbUserDao;
 	}
 
 }
