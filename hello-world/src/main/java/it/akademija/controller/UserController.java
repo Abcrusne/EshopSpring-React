@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import it.akademija.PagingData;
 import it.akademija.model.CreateUserCommand;
 import it.akademija.model.User;
 import it.akademija.service.UserService;
@@ -64,13 +65,14 @@ import it.akademija.service.UserService;
 @RequestMapping(value = "/api/users")
 public class UserController {
 
-	@Autowired
 	private UserService userService;
+	private PagingData pagingData;
 
 	@Autowired
-	public UserController(UserService userService) {
+	public UserController(UserService userService, PagingData pagingData) {
 		super();
 		this.userService = userService;
+		this.pagingData = pagingData;
 	}
 
 	public UserService getUserService() {
@@ -81,9 +83,18 @@ public class UserController {
 		this.userService = userService;
 	}
 
+	public PagingData getPagingData() {
+		return pagingData;
+	}
+
+	public void setPagingData(PagingData pagingData) {
+		this.pagingData = pagingData;
+	}
+
 	@RequestMapping(method = RequestMethod.GET)
 	@ApiOperation(value = "Get users", notes = "Returns registered users")
 	public List<User> getUsers() {
+		pagingData.setLimit(10);
 		return userService.getUsers();
 	}
 
@@ -92,8 +103,7 @@ public class UserController {
 	@ApiOperation(value = "Create user", notes = "Creates users with data")
 	public void createUser(
 			@ApiParam(value = "User Data", required = true) @Valid @RequestBody final CreateUserCommand cmd) {
-		User user = new User(cmd.getId(), cmd.getUsername(), cmd.getFirstName(), cmd.getLastName(), cmd.getEmail(),
-				cmd.getAge());
+		User user = new User(cmd.getUsername(), cmd.getFirstName(), cmd.getLastName(), cmd.getEmail(), cmd.getAge());
 		userService.createUser(user);
 		System.out.println("Created user with username: " + user.getUsername());
 	}
@@ -101,9 +111,10 @@ public class UserController {
 	/* Apdoros užklausas: DELETE /api/users/<vartotojas> */
 	@RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@ApiOperation(value = "Delete user", notes = "Deletes user by id")
-	public void deleteUser(@PathVariable final Long id) {
-		userService.deleteUserById(id);
-		System.out.println("Deleting user: " + id);
+	@ApiOperation(value = "Delete user", notes = "Deletes user by username")
+	public void deleteUser(@PathVariable final String username) {
+		userService.deleteUser(username);
+		System.out.println("Deleting user: " + username);
 	}
+
 }

@@ -1,5 +1,8 @@
 package it.akademija.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class CartProduct {
 
 	private int id;

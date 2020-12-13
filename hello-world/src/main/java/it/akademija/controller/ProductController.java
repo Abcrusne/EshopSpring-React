@@ -14,46 +14,53 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import it.akademija.dao.ProductDAO;
 import it.akademija.model.CreateProductCommand;
 import it.akademija.model.Product;
+import it.akademija.service.ProductService;
 
 @RestController
 @Api(value = "products")
 @RequestMapping(value = "/api/products")
 public class ProductController {
 
-	private final ProductDAO productDao;
+//	private final ProductDAO productDao;
+//
+//	@Autowired
+//	public ProductController(ProductDAO productDao) {
+//		this.productDao = productDao;
+//	}
+
+	private ProductService productService;
 
 	@Autowired
-	public ProductController(ProductDAO productDao) {
-		this.productDao = productDao;
+	public ProductController(ProductService productService) {
+		super();
+		this.productService = productService;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ApiOperation(value = "Get products", notes = "Returns all products")
 	public Set<Product> getProducts() {
-		return productDao.getProducts();
+		return productService.getProducts();
 	}
 
 	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
 	@ApiOperation(value = "Get product", notes = "Returns product with specified id")
 	public Product getProduct(@PathVariable final Long id) {
-		return productDao.getProduct(id);
+		return productService.getProduct(id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "Create product", notes = "Creates new product")
 	public void addProduct(@RequestBody final CreateProductCommand cmd) {
-		Long id = (long) (getProducts().size() + 1);
 		String title = cmd.getTitle();
 		String description = cmd.getDescription();
 		String image = cmd.getImage();
 		BigDecimal price = cmd.getPrice();
 		int quantity = cmd.getQuantity();
 
-		productDao.addProduct(new Product(id, title, description, image, price, quantity));
+		productService.addProduct(new Product(title, description, image, price, quantity));
 	}
 
 	@RequestMapping(path = "/{id}", method = RequestMethod.PUT)
@@ -67,14 +74,14 @@ public class ProductController {
 		BigDecimal price = cmd.getPrice();
 		int quantity = cmd.getQuantity();
 
-		productDao.updateProduct(new Product(id, title, description, image, price, quantity));
+		productService.updateProduct(new Product(title, description, image, price, quantity));
 	}
 
 	@RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@ApiOperation(value = "Delete product", notes = "Deletes product with specified id")
 	public void deleteProduct(@PathVariable final Long id) {
-		productDao.deleteProduct(id);
+		productService.deleteProduct(id);
 	}
 
 }

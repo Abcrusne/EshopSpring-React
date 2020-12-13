@@ -2,27 +2,52 @@ package it.akademija.model;
 
 import java.math.BigDecimal;
 
-public class Product {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
+@Entity
+public class Product {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String title;
-	private String image;
-	private String description;
 	private BigDecimal price;
 	private int quantity;
+
+	private String image = getProductDetails().getImage();
+	private String description = getProductDetails().getDescription();
+
+	@OneToOne
+	@JoinColumn(name = "productDetails_id")
+	private ProductDetails productDetails;
 
 	public Product() {
 		super();
 	}
 
-	public Product(Long id, String title, String description, String image, BigDecimal price, int quantity) {
+	public Product(String title, String description, String image, BigDecimal price, int quantity) {
 		super();
-		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.image = image;
 		this.price = price;
 		this.quantity = quantity;
+	}
+
+	public ProductDetails getProductDetails() {
+		return productDetails;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public void setProductDetails(ProductDetails productDetails) {
+		this.productDetails = productDetails;
 	}
 
 	public Long getId() {
@@ -34,11 +59,11 @@ public class Product {
 	}
 
 	public String getImage() {
-		return image;
+		return this.getProductDetails().getImage();
 	}
 
 	public String getDescription() {
-		return description;
+		return this.getProductDetails().getDescription();
 	}
 
 	public BigDecimal getPrice() {
@@ -127,8 +152,8 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", title=" + title + ", image=" + image + ", description=" + description
-				+ ", price=" + price + ", quantity=" + quantity + "]";
+		return "Product [id=" + id + ", title=" + title + ", price=" + price + ", quantity=" + quantity + ", image="
+				+ image + ", description=" + description + ", productDetails=" + productDetails + "]";
 	}
 
 }

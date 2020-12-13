@@ -15,29 +15,10 @@ public class RestService {
 
 	@Autowired
 	private Set<Product> products;
-//
-//	@Autowired
-//	private List<User> users;
 
 	@RequestMapping("/productsCollection")
-	public void getProductsCollection() {
-		products.stream().map(p -> p.getTitle()).forEach(System.out::println);
+	public Set<Product> getProductsCollection() {
+		return products;
 	}
-
-//	@RequestMapping("/findUsersByName")
-//	public User findByFirstnameAndLastname(String firstname, String lastname)
-//
-//	{
-//		for (User user : users)
-//			if (user.getFirstName().equals(firstname) && user.getLastName().equals(lastname)) {
-//				return user;
-//			}
-//		return null;
-//	}
-//
-//	@RequestMapping("/findOldestUser")
-//	public User findOldestUser() {
-//		return Collections.max(users, Comparator.comparingInt(u -> u.getAge()));
-//	}
 
 }

@@ -1,4 +1,4 @@
-package it.akademija.dao;
+package it.akademija.service;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -6,16 +6,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
+import it.akademija.dao.DBCartProductDao;
 import it.akademija.model.CartProduct;
 
-@Repository
-public class InMemoryCartProductDAO implements CartProductDAO {
+public class CartProductService {
 
+	@Autowired
+	private DBCartProductDao dbCartProductDao;
+	@Autowired
 	private final Map<String, List<CartProduct>> productsByUsername = new HashMap<>();
 
-	@Override
+	public DBCartProductDao getDbCartProductDao() {
+		return dbCartProductDao;
+	}
+
+	public void setDbCartProductDao(DBCartProductDao dbCartProductDao) {
+		this.dbCartProductDao = dbCartProductDao;
+	}
+
+	@Transactional(readOnly = true)
 	public List<CartProduct> getCartProducts(String username) {
 		if (!(productsByUsername.containsKey(username))) {
 			productsByUsername.put(username, new CopyOnWriteArrayList<>());
@@ -25,13 +37,12 @@ public class InMemoryCartProductDAO implements CartProductDAO {
 		}
 	}
 
-	@Override
+	@Transactional
 	public void addCartProduct(String username, CartProduct cartProduct) {
-
 		productsByUsername.get(username).add(cartProduct);
 	}
 
-	@Override
+	@Transactional
 	public void deleteCartProduct(String username, int id) {
 		productsByUsername.get(username).remove(id);
 	}

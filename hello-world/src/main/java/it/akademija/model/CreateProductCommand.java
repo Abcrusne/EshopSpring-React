@@ -4,16 +4,11 @@ import java.math.BigDecimal;
 
 public class CreateProductCommand {
 
-	private Long id;
 	private String title;
 	private String image;
 	private String description;
 	private BigDecimal price;
 	private int quantity;
-
-	public Long getId() {
-		return id;
-	}
 
 	public String getTitle() {
 		return title;
@@ -33,10 +28,6 @@ public class CreateProductCommand {
 
 	public int getQuantity() {
 		return quantity;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public void setTitle(String title) {

@@ -6,8 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 @Entity
 @NamedQuery(name = "User.findOldestUser", query = "select u from User u where u.age = (select max(u1.age) from User u1)")
 public class User {
@@ -21,12 +19,11 @@ public class User {
 	private String email;
 	private Integer age;
 
-	@Autowired
 	public User() {
 	}
 
-	public User(Long id, String username, String firstname, String lastname, String email, Integer age) {
-		this.id = id;
+	public User(String username, String firstname, String lastname, String email, Integer age) {
+
 		this.username = username;
 		this.firstname = firstname;
 		this.lastname = lastname;

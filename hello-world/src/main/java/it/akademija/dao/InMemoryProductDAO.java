@@ -34,8 +34,8 @@ public class InMemoryProductDAO implements ProductDAO {
 	public void updateProduct(Product product) {
 		Product productToUpdate = getProduct(product.getId());
 		productToUpdate.setTitle(product.getTitle());
-		productToUpdate.setDescription(product.getDescription());
-		productToUpdate.setImage(product.getImage());
+		productToUpdate.setDescription(product.getProductDetails().getDescription());
+		productToUpdate.setImage(product.getProductDetails().getImage());
 		productToUpdate.setPrice(product.getPrice());
 		productToUpdate.setQuantity(product.getQuantity());
 
