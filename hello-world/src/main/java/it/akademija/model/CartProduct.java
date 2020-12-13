@@ -1,13 +1,20 @@
 package it.akademija.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class CartProduct {
 
-	private int id;
+	@Id
+	private Integer id;
 	private String title;
 	private String image;
+	@ManyToMany(mappedBy = "carts")
+	private List<Product> products;
 
 	public CartProduct() {
 
@@ -17,6 +24,14 @@ public class CartProduct {
 		this.id = id;
 		this.title = title;
 		this.image = image;
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
 
 	public int getId() {

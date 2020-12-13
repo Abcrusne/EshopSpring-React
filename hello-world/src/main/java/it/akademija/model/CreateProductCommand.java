@@ -9,6 +9,15 @@ public class CreateProductCommand {
 	private String description;
 	private BigDecimal price;
 	private int quantity;
+	private ProductDetails productDetails;
+
+	public ProductDetails getProductDetails() {
+		return productDetails;
+	}
+
+	public void setProductDetails(ProductDetails productDetails) {
+		this.productDetails = productDetails;
+	}
 
 	public String getTitle() {
 		return title;

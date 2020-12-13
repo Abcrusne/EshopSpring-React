@@ -1,13 +1,17 @@
 package it.akademija.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 public class Product {
@@ -17,13 +21,16 @@ public class Product {
 	private String title;
 	private BigDecimal price;
 	private int quantity;
-
 	private String image = getProductDetails().getImage();
 	private String description = getProductDetails().getDescription();
 
 	@OneToOne
 	@JoinColumn(name = "productDetails_id")
 	private ProductDetails productDetails;
+
+	@ManyToMany
+	@JoinTable(table = @Table(name = "Product_Cart"), joinColumns = @JoinColumn(name = "Product_ID"), inverseJoinColumns = @JoinColumn(name = "Cart_ID"))
+	private List<CartProduct> carts;
 
 	public Product() {
 		super();
@@ -36,6 +43,14 @@ public class Product {
 		this.image = image;
 		this.price = price;
 		this.quantity = quantity;
+	}
+
+	public List<CartProduct> getCarts() {
+		return carts;
+	}
+
+	public void setCarts(List<CartProduct> carts) {
+		this.carts = carts;
 	}
 
 	public ProductDetails getProductDetails() {
