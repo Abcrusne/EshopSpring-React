@@ -1,8 +1,10 @@
-package it.akademija.model;
+package it.akademija.entities;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,45 +13,58 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
+//@MappedSuperclass
+
+//@Table(name = "products")
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@DiscriminatorColumn(name = "Product_Type")
 @Entity
 public class Product {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	private String title;
 	private BigDecimal price;
 	private int quantity;
-	private String image = getProductDetails().getImage();
-	private String description = getProductDetails().getDescription();
 
-	@OneToOne
+	@OneToOne(cascade = { CascadeType.PERSIST }, orphanRemoval = true)
 	@JoinColumn(name = "productDetails_id")
 	private ProductDetails productDetails;
 
-	@ManyToMany
-	@JoinTable(table = @Table(name = "Product_Cart"), joinColumns = @JoinColumn(name = "Product_ID"), inverseJoinColumns = @JoinColumn(name = "Cart_ID"))
-	private List<CartProduct> carts;
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.DETACH })
+	@JoinTable(name = "Product_Cart", joinColumns = @JoinColumn(name = "Product_ID"), inverseJoinColumns = @JoinColumn(name = "Cart_Owner"))
+	private Set<CartProduct> carts;
+	// @MapKey(name = "cartProductsByUsername")
+	// private final Map<String, List<CartProduct>> userProducts = new HashMap<>();
 
 	public Product() {
 		super();
 	}
 
-	public Product(String title, String description, String image, BigDecimal price, int quantity) {
+	public Product(String title, BigDecimal price, int quantity) {
 		super();
 		this.title = title;
-		this.description = description;
-		this.image = image;
 		this.price = price;
 		this.quantity = quantity;
+		this.carts = new HashSet<>();
 	}
 
-	public List<CartProduct> getCarts() {
+	public Product(String title, BigDecimal price, int quantity, ProductDetails productDetails) {
+		super();
+		this.title = title;
+		this.price = price;
+		this.quantity = quantity;
+		this.productDetails = productDetails;
+		this.carts = new HashSet<>();
+	}
+
+	public Set<CartProduct> getCarts() {
 		return carts;
 	}
 
-	public void setCarts(List<CartProduct> carts) {
+	public void setCarts(Set<CartProduct> carts) {
 		this.carts = carts;
 	}
 
@@ -73,14 +88,6 @@ public class Product {
 		return title;
 	}
 
-	public String getImage() {
-		return this.getProductDetails().getImage();
-	}
-
-	public String getDescription() {
-		return this.getProductDetails().getDescription();
-	}
-
 	public BigDecimal getPrice() {
 		return price;
 	}
@@ -97,14 +104,6 @@ public class Product {
 		this.title = title;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
@@ -117,9 +116,7 @@ public class Product {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((image == null) ? 0 : image.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + quantity;
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
@@ -135,21 +132,21 @@ public class Product {
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
+//		if (description == null) {
+//			if (other.description != null)
+//				return false;
+//		} else if (!description.equals(other.description))
+//			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (image == null) {
-			if (other.image != null)
-				return false;
-		} else if (!image.equals(other.image))
-			return false;
+//		if (image == null) {
+//			if (other.image != null)
+//				return false;
+//		} else if (!image.equals(other.image))
+//			return false;
 		if (price == null) {
 			if (other.price != null)
 				return false;
@@ -167,8 +164,8 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", title=" + title + ", price=" + price + ", quantity=" + quantity + ", image="
-				+ image + ", description=" + description + ", productDetails=" + productDetails + "]";
+		return "Product [id=" + id + ", title=" + title + ", price=" + price + ", quantity=" + quantity
+				+ ", productDetails=" + productDetails + "]";
 	}
 
 }

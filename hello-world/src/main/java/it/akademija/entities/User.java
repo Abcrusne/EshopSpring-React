@@ -1,13 +1,13 @@
-package it.akademija.model;
+package it.akademija.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 
+//@Table(name = "users")
+//@NamedQuery(name = "User.findOldestUser", query = "select u from User u where u.age = (select max(u1.age) from User u1)")
 @Entity
-@NamedQuery(name = "User.findOldestUser", query = "select u from User u where u.age = (select max(u1.age) from User u1)")
 public class User {
 
 	@Id
@@ -17,13 +17,12 @@ public class User {
 	private String firstname;
 	private String lastname;
 	private String email;
-	private Integer age;
+	private int age;
 
 	public User() {
 	}
 
-	public User(String username, String firstname, String lastname, String email, Integer age) {
-
+	public User(String username, String firstname, String lastname, String email, int age) {
 		this.username = username;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -31,13 +30,13 @@ public class User {
 		this.age = age;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+//	public Long getId() {
+//		return id;
+//	}
+//
+//	public void setId(Long id) {
+//		this.id = id;
+//	}
 
 	public String getUsername() {
 		return username;
@@ -71,11 +70,11 @@ public class User {
 		this.email = email;
 	}
 
-	public Integer getAge() {
+	public int getAge() {
 		return age;
 	}
 
-	public void setAge(Integer age) {
+	public void setAge(int age) {
 		this.age = age;
 	}
 

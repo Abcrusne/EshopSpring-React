@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import it.akademija.model.CreateProductCommand;
-import it.akademija.model.Product;
+import it.akademija.model.ProductFromService;
 import it.akademija.service.ProductService;
 
 @RestController
@@ -30,7 +30,8 @@ public class ProductController {
 //		this.productDao = productDao;
 //	}
 
-	private ProductService productService;
+	@Autowired
+	private final ProductService productService;
 
 	@Autowired
 	public ProductController(ProductService productService) {
@@ -40,27 +41,35 @@ public class ProductController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ApiOperation(value = "Get products", notes = "Returns all products")
-	public Set<Product> getProducts() {
+	public Set<ProductFromService> getProducts() {
+//		return productService.getProducts().stream()
+//				.map(productIsServiso -> new ProductFromService(productIsServiso.getTitle(),
+//						productIsServiso.getImage(), productIsServiso.getDescription(), productIsServiso.getPrice(),
+//						productIsServiso.getQuantity(),
+//						productIsServiso.getId()))
+//				.collect(Collectors.toSet());
 		return productService.getProducts();
 	}
 
 	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
 	@ApiOperation(value = "Get product", notes = "Returns product with specified id")
-	public Product getProduct(@PathVariable final Long id) {
+	public ProductFromService getProduct(@PathVariable final Long id) {
 		return productService.getProduct(id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "Create product", notes = "Creates new product")
-	public void addProduct(@RequestBody final CreateProductCommand cmd) {
-		String title = cmd.getTitle();
-		String description = cmd.getDescription();
-		String image = cmd.getImage();
-		BigDecimal price = cmd.getPrice();
-		int quantity = cmd.getQuantity();
+	public void createProduct(@RequestBody final CreateProductCommand cmd) {
+		productService.createProduct(cmd);
 
-		productService.addProduct(new Product(title, description, image, price, quantity));
+//		String title = cmd.getTitle();
+//	String description = cmd.getDescription();
+//		String image = cmd.getImage();
+//		BigDecimal price = cmd.getPrice();
+//		int quantity = cmd.getQuantity();
+//		var product = new ProductFromService(title, description, image, price, quantity, id);
+//		productService.saveProduct(product);
 	}
 
 	@RequestMapping(path = "/{id}", method = RequestMethod.PUT)
@@ -73,8 +82,9 @@ public class ProductController {
 		String image = cmd.getImage();
 		BigDecimal price = cmd.getPrice();
 		int quantity = cmd.getQuantity();
+		var product = new ProductFromService(title, description, image, price, quantity, id);
+		productService.updateProduct(product);
 
-		productService.updateProduct(new Product(title, description, image, price, quantity));
 	}
 
 	@RequestMapping(path = "/{id}", method = RequestMethod.DELETE)

@@ -6,7 +6,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.springframework.stereotype.Repository;
 
-import it.akademija.model.User;
+import it.akademija.entities.User;
 
 @Repository
 public class InMemoryUserDAO implements UserDAO {

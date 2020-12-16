@@ -2,7 +2,7 @@ package it.akademija.dao;
 
 import java.util.Set;
 
-import it.akademija.model.Product;
+import it.akademija.entities.Product;
 
 public interface ProductDAO {
 
@@ -10,7 +10,7 @@ public interface ProductDAO {
 
 	Product getProduct(Long id);
 
-	void addProduct(Product product);
+	void createProduct(Product product);
 
 	void updateProduct(Product product);
 

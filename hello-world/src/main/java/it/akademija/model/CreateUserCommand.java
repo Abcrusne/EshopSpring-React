@@ -1,6 +1,5 @@
 package it.akademija.model;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
@@ -11,21 +10,21 @@ public class CreateUserCommand {
 	@Length(min = 1, max = 30)
 	private String username;
 
-	@NotNull
-	@Length(min = 1, max = 100)
-	private String firstName;
+//	@NotNull
+//	@Length(min = 1, max = 100)
+	private String firstname;
 
-	@NotNull
-	@Length(min = 1, max = 100)
-	private String lastName;
+//	@NotNull
+//	@Length(min = 1, max = 100)
+	private String lastname;
 
-	@NotNull
-	@Length(min = 1, max = 100)
-	@Email
+//	@NotNull
+//	@Length(min = 1, max = 100)
+//	@Email
 	private String email;
 
-	@NotNull
-	private Integer age;
+	// @NotNull
+	private int age;
 
 	public String getUsername() {
 		return username;
@@ -35,20 +34,24 @@ public class CreateUserCommand {
 		this.username = username;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public String getLastname() {
+		return lastname;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 	public String getEmail() {
@@ -59,12 +62,8 @@ public class CreateUserCommand {
 		this.email = email;
 	}
 
-	public Integer getAge() {
+	public int getAge() {
 		return age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
 	}
 
 }

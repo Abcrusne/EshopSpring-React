@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
-import it.akademija.model.Product;
+import it.akademija.entities.Product;
 
 @RestController
 @ApiOperation(value = "RestService")

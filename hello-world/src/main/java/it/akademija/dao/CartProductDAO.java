@@ -1,15 +1,18 @@
 package it.akademija.dao;
 
-import java.util.List;
+import java.util.Set;
 
-import it.akademija.model.CartProduct;
+import it.akademija.entities.CartProduct;
+import it.akademija.entities.Product;
 
 public interface CartProductDAO {
 
-	List<CartProduct> getCartProducts(String username);
+	Set<Product> getCartProducts(String username);
 
-	void addCartProduct(String username, CartProduct cartProduct);
+	CartProduct addCartProduct(String username, Product product);
 
-	void deleteCartProduct(String username, int id);
+	CartProduct deleteCartProduct(String username, Product product);
+
+	CartProduct getCartByUsername(String username);
 
 }

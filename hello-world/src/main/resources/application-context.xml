@@ -8,7 +8,7 @@
   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
   <context:annotation-config/>
   <context:component-scan base-package="it.akademija"/>
-  <!-- bean definitions go here -->
+  <!-- bean definitions go here 
  
  	
  				<bean id="product1" class="it.akademija.model.Product">		
@@ -35,5 +35,5 @@
  					<property name="price" value="30.6" />		
  					<property name="quantity" value="31" />					
  					</bean>
-
+-->
 </beans>

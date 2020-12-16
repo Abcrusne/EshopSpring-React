@@ -2,7 +2,7 @@ package it.akademija.dao;
 
 import java.util.List;
 
-import it.akademija.model.User;
+import it.akademija.entities.User;
 
 public interface UserDAO {
 

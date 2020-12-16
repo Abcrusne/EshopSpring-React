@@ -5,14 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import io.swagger.annotations.ApiOperation;
 import it.akademija.dao.DBUserDao;
-import it.akademija.model.User;
+import it.akademija.entities.User;
 
+//@ApiOperation(value = "UserService")
 @Service
-@ApiOperation(value = "UserService")
 public class UserService {
 
 	@Autowired
@@ -41,8 +39,8 @@ public class UserService {
 //		dbUserDao.deleteById(id);
 //	}
 
+	// @RequestMapping("/findOldestUser")
 	@Transactional
-	@RequestMapping("/findOldestUser")
 	public User findOldestUser() {
 		return dbUserDao.findOldestUser();
 	}

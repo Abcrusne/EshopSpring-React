@@ -6,7 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import it.akademija.model.Product;
+import it.akademija.entities.Product;
 
 @Repository
 public class InMemoryProductDAO implements ProductDAO {
@@ -25,7 +25,7 @@ public class InMemoryProductDAO implements ProductDAO {
 	}
 
 	@Override
-	public void addProduct(Product product) {
+	public void createProduct(Product product) {
 		products.add(product);
 
 	}
@@ -34,8 +34,8 @@ public class InMemoryProductDAO implements ProductDAO {
 	public void updateProduct(Product product) {
 		Product productToUpdate = getProduct(product.getId());
 		productToUpdate.setTitle(product.getTitle());
-		productToUpdate.setDescription(product.getProductDetails().getDescription());
-		productToUpdate.setImage(product.getProductDetails().getImage());
+		// productToUpdate.setDescription(product.getProductDetails().getDescription());
+		// productToUpdate.setImage(product.getProductDetails().getImage());
 		productToUpdate.setPrice(product.getPrice());
 		productToUpdate.setQuantity(product.getQuantity());
 

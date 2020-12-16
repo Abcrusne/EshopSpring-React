@@ -1,17 +1,35 @@
-package it.akademija.model;
+package it.akademija.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+@Entity
 public class ProductDetails {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@Column(name = "id")
 	private Long id;
 	private String image;
 	private String description;
 
 	@OneToOne(mappedBy = "productDetails")
 	private Product product;
+
+	public ProductDetails() {
+		super();
+	}
+
+	public ProductDetails(String image, String description) {
+		super();
+
+		this.image = image;
+		this.description = description;
+
+	}
 
 	public Long getId() {
 		return id;
